@@ -39,10 +39,21 @@ namespace NetCoreSeguridadPersonalizada.Controllers
                     {
                         ExpiresUtc = DateTime.Now.AddMinutes(10)
                     });
-                RedirectToAction("Perfil", "Usuarios");
+                return RedirectToAction("Perfil", "Usuarios");
             }
-            ViewData["MENSAJE"] = "Credenciales incorrectas";
-            return View();
+            else
+            {
+                ViewData["MENSAJE"] = "Credenciales incorrectas";
+                return View();
+            }
         }
+
+        public async Task<IActionResult> LogOut()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Index", "Home");
+        }
+
     }
+
 }
